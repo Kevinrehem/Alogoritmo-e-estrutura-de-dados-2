@@ -23,9 +23,9 @@ POINT add_node(POINT root, POINT node){
         return node;
     }
     if (node->value < root->value){
-        root = add_node(root->left, node);
+        root->left = add_node(root->left, node);
     }else{
-        root = add_node(root->right, node);
+        root->right = add_node(root->right, node);
     }
     return root;  
 }
