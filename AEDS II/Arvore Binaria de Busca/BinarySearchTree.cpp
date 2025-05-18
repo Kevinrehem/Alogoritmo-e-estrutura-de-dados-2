@@ -56,7 +56,11 @@ int main(){
     int op=-1;
     KEY value;
     srand(time(0));
-    for(int i = 0; i<50500001; i++){
-
+    for(int i = 0; i<10; i++){
+        value = (rand()%100)+1;
+        bool minus = rand()%2;
+        if(minus) value*=-1;
+        root = add_node(root, create_node(value));
     }
+
 }
