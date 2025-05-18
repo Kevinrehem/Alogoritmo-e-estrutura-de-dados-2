@@ -5,7 +5,7 @@ typedef int KEY; //define o tipo comparável da chave a ser utilizada na estrutu
 
 //Estrutura que armazena o valor de um nó da árvore e o próximo valor menor e maior que ele
 struct Node{
-    KEY key;
+    KEY value;
     Node *left, *right;
 };
 
@@ -16,6 +16,20 @@ typedef Node* POINT;
 POINT start(){
     return NULL;
 }
+
+//adiciona um novo nó na árvore recursivamente
+POINT add_node(POINT root, POINT node){
+    if(!root){
+        return node;
+    }
+    if (node->value < root->value){
+        root = add_node(root->left, node);
+    }else{
+        root = add_node(root->right, node);
+    }
+    return root;  
+}
+
 
 
 int main(){
