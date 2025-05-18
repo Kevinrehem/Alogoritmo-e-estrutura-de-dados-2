@@ -41,12 +41,18 @@ POINT add_node(POINT root, POINT node){
     return root;  
 }
 
-//imprime, em ordem crescente, os nós contidos na árvore
-void show_elements(POINT root){
+//imprime, em ordem crescente ou decrescente, os nós contidos na árvore
+void show_elements(POINT root, bool key){
     if(root){
-        show_elements(root->left);
-        cout << root->value << " ";
-        show_elements(root->right);
+        if(key){
+            show_elements(root->left, key);
+            cout << root->value << " ";
+            show_elements(root->right, key);
+        }else{
+            show_elements(root->right, key);
+            cout << root->value << " ";
+            show_elements(root->left, key);
+        }
     }
 
 }
@@ -61,6 +67,35 @@ int main(){
         bool minus = rand()%2;
         if(minus) value*=-1;
         root = add_node(root, create_node(value));
+    }
+    
+    //Menu
+    while(op!=0){
+        cout << "1 - Inserir novo elemento na arvore\n";
+        cout << "2 - Imprimir elementos em ordem crescente\n";
+        cout << "3 - Imprimir elementos em ordem decrescente\n";
+        cout << "0 - Sair\n";
+        cin >> op;
+        switch (op){
+            case 1:
+                cout << "Valor: "; cin >> value;
+                root = add_node(root, create_node(value));
+                break;
+
+            case 2:
+                show_elements(root, true);
+                cout << endl;
+                break;
+
+            case 3:
+                show_elements(root, false);
+                cout << endl;
+                break;
+            
+            default:
+                cout << "Opcao invalida\n";
+                break;
+        }
     }
 
 }
