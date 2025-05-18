@@ -30,7 +30,15 @@ POINT add_node(POINT root, POINT node){
     return root;  
 }
 
+//imprime, em ordem crescente, os nós contidos na árvore
+void show_elements(POINT root){
+    if(root){
+        show_elements(root->left);
+        cout << root->value << " ";
+        show_elements(root->right);
+    }
 
+}
 
 int main(){
 
