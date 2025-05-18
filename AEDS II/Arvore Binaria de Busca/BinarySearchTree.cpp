@@ -11,8 +11,8 @@ struct Node{
     Node *left, *right;
 };
 
-//identifica um ponteiro do tipo node como  POINT para facilitar a identificação
-typedef Node* POINT;
+
+typedef Node* POINT; //identifica um ponteiro do tipo node como POINT para facilitar a identificação
 
 //inicializa o primeiro node de uma árvore, que terá um Node apontando para nulo
 POINT start(){
@@ -57,6 +57,20 @@ void show_elements(POINT root, bool key){
 
 }
 
+//função que devolve um node procurado na arvore e seu node pai, caso solicitado
+POINT search(POINT root, KEY value, POINT *parent){
+    parent = NULL;
+    POINT current = root;
+    while (current){
+        if(current->value == value) return current;
+        *parent = current;
+        if (value<current->value)current = current->left;
+        else current = current->right;
+    }
+    return current;
+}
+
+//metodo principal
 int main(){
     POINT root = start();
     int op=-1;
@@ -74,6 +88,7 @@ int main(){
         cout << "1 - Inserir novo elemento na arvore\n";
         cout << "2 - Imprimir elementos em ordem crescente\n";
         cout << "3 - Imprimir elementos em ordem decrescente\n";
+        cout << "4 - Buscar um elemento na arvore\n";
         cout << "0 - Sair\n";
         cin >> op;
         switch (op){
@@ -91,7 +106,15 @@ int main(){
                 show_elements(root, false);
                 cout << endl;
                 break;
-            
+
+            case 4:
+                cout << "Valor buscado: "; cin >> value;
+                if(search(root, value, NULL)){
+                    cout << value << " encontrado na posicao de memoria: " << search(root, value, NULL);
+                }else{
+                    cout << value << " nao foi encontrado"
+                }
+                break;
             default:
                 cout << "Opcao invalida\n";
                 break;
