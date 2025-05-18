@@ -1,4 +1,6 @@
 #include<iostream>
+#include<cstdlib>
+#include<ctime>
 using namespace std;
 
 typedef int KEY; //define o tipo comparável da chave a ser utilizada na estrutura Node da árvore
@@ -15,6 +17,15 @@ typedef Node* POINT;
 //inicializa o primeiro node de uma árvore, que terá um Node apontando para nulo
 POINT start(){
     return NULL;
+}
+
+//inicializa um novo node de forma que ele não aponte para nenhum outro node (nó folha)
+POINT create_node(KEY value){
+    POINT aux = new Node;
+    aux->value=value;
+    aux->left=NULL;
+    aux->right=NULL;
+    return aux;
 }
 
 //adiciona um novo nó na árvore recursivamente
@@ -41,5 +52,11 @@ void show_elements(POINT root){
 }
 
 int main(){
+    POINT root = start();
+    int op=-1;
+    KEY value;
+    srand(time(0));
+    for(int i = 0; i<50500001; i++){
 
+    }
 }
