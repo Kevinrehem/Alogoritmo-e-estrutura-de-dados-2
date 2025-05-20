@@ -59,8 +59,8 @@ void show_elements(POINT root, bool key){
 
 //função que devolve um node procurado na arvore e seu node pai, caso solicitado
 POINT search(POINT root, KEY value, POINT *parent){
-    parent = NULL;
     POINT current = root;
+    *parent = NULL;
     while (current){
         if(current->value == value) return current;
         *parent = current;
@@ -73,8 +73,33 @@ POINT search(POINT root, KEY value, POINT *parent){
 //função que exclui um nó da árvore a partir de um valor do seu atributo chave
 POINT erase(POINT root, KEY value){
     POINT node, parent, p, q;
-    node = search(root, value, &parent); 
-    if(!node->left || !node->right)
+    node = search(root, value, &parent);
+    if(!node) return root;
+    if(!node->left || !node->right){
+        if(!node->left) q = node->right;
+        else q = node->left;
+    }else{
+        q = node->left;//pega a sub-árvore à esquerda do nó a ser excluido
+        p = node;
+        //percorre até o nó mais à direita da sub-árvore à esquerda
+        while(q->right){
+            p=q;
+            q=q->right;
+        }
+        if(p!=node){
+            p->right=q->left;
+            q->left=node->left;
+        }
+        q->right=node->right;
+    }
+    if(!parent){
+        free(node);
+        return q;
+    }
+    if(value < parent->value) parent->left = q;
+    else parent->right = q;
+    free(node);
+    return root;
 }
 
 //metodo principal
@@ -96,6 +121,7 @@ int main(){
         cout << "2 - Imprimir elementos em ordem crescente\n";
         cout << "3 - Imprimir elementos em ordem decrescente\n";
         cout << "4 - Buscar um elemento na arvore\n";
+        cout << "5 - Excluir um elemento da arvore\n";
         cout << "0 - Sair\n";
         cin >> op;
         switch (op){
@@ -119,9 +145,15 @@ int main(){
                 if(search(root, value, NULL)){
                     cout << value << " encontrado na posicao de memoria: " << search(root, value, NULL);
                 }else{
-                    cout << value << " nao foi encontrado"
+                    cout << value << " nao foi encontrado";
                 }
                 break;
+
+            case 5:
+                cout << "Valor a excluir: "; cin >> value;
+                root = erase(root, value);
+                break;
+
             default:
                 cout << "Opcao invalida\n";
                 break;
