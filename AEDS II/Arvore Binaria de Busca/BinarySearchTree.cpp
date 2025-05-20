@@ -70,6 +70,13 @@ POINT search(POINT root, KEY value, POINT *parent){
     return current;
 }
 
+//função que exclui um nó da árvore a partir de um valor do seu atributo chave
+POINT erase(POINT root, KEY value){
+    POINT node, parent, p, q;
+    node = search(root, value, &parent); 
+    if(!node->left || !node->right)
+}
+
 //metodo principal
 int main(){
     POINT root = start();
