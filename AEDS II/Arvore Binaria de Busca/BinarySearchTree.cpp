@@ -59,6 +59,7 @@ void show_elements(POINT root, bool key){
 
 //função que devolve um node procurado na arvore e seu node pai, caso solicitado
 POINT search(POINT root, KEY value, POINT *parent){
+    if(!root) return NULL;
     POINT current = root;
     *parent = NULL;
     while (current){
