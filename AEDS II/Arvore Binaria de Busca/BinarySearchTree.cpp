@@ -103,6 +103,39 @@ POINT erase(POINT root, KEY value){
     return root;
 }
 
+//imprime arvore pós-ordem
+void print_post_order(POINT root){
+    if(root){
+        cout << "(";
+        print_post_order(root->left);
+        cout << ")";
+        print_post_order(root->right);
+        cout << root->value << " ";
+    }
+}
+
+//imprime árvore pre-ordem
+void print_pre_order(POINT root){
+    if(root){
+        cout << root->value << " ";
+        print_pre_order(root->left);
+        cout << "(";
+        print_pre_order(root->right);
+        cout << ")";
+    }
+}
+
+//imprime árvore em ordem
+void print_in_order(POINT root){
+    if(root){
+        cout << "(";
+        print_in_order(root->left);
+        cout << root->value << " ";
+        print_in_order(root->right);
+        cout << ")";
+    }
+}
+
 //metodo principal
 int main(){
     POINT root = start();
@@ -119,10 +152,11 @@ int main(){
     //Menu
     while(op!=0){
         cout << "1 - Inserir novo elemento na arvore\n";
-        cout << "2 - Imprimir elementos em ordem crescente\n";
-        cout << "3 - Imprimir elementos em ordem decrescente\n";
-        cout << "4 - Buscar um elemento na arvore\n";
-        cout << "5 - Excluir um elemento da arvore\n";
+        cout << "2 - Imprimir elementos em ordem\n";
+        cout << "3 - Imprimir elementos pre-ordem\n";
+        cout << "4 - Imprimir elementos pos-ordem\n";
+        cout << "5 - Buscar um elemento na arvore\n";
+        cout << "6 - Excluir um elemento da arvore\n";
         cout << "0 - Sair\n";
         cin >> op;
         switch (op){
@@ -132,16 +166,22 @@ int main(){
                 break;
 
             case 2:
-                show_elements(root, true);
+                print_in_order(root);
+                //show_elements(root, true);
                 cout << endl;
                 break;
 
             case 3:
-                show_elements(root, false);
+                print_pre_order(root);
                 cout << endl;
                 break;
 
             case 4:
+                print_post_order(root);
+                cout<<endl;
+                break;
+
+            case 5:
                 cout << "Valor buscado: "; cin >> value;
                 if(search(root, value, NULL)){
                     cout << value << " encontrado na posicao de memoria: " << search(root, value, NULL);
@@ -150,9 +190,12 @@ int main(){
                 }
                 break;
 
-            case 5:
+            case 6:
                 cout << "Valor a excluir: "; cin >> value;
                 root = erase(root, value);
+                break;
+
+            case 0:
                 break;
 
             default:
